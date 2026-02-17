@@ -1,0 +1,22 @@
+## 📸 Evidence & Verification
+
+1. Initial Investigation & Log Analysis
+This screenshot shows the initial discovery of the issue. We list the log files and then use grep to filter for the specific "Connection Refused" error, confirming the application is failing to connect to the database on port 5433.
+
+SCREENSHOT
+
+2. System Verification & Discovery
+Here, we perform detective work. First, we use curl to verify that the PostgreSQL database is actually running and healthy on its default port, 5432. Next, we use find to locate the database configuration file and ls -l to reveal its restrictive, read-only permissions, explaining why it couldn't be immediately edited.
+
+
+
+3. Remediation Action
+This image documents the fix. We escalate privileges with sudo to change the file permissions using chmod 600, making it writable. Then, we use sed to perform an in-place edit, changing the port from 5433 to 5432. Finally, we lock the file permissions back down with chmod 400 to maintain security.
+
+
+
+4. Final Validation
+The final image provides proof of resolution. We use curl to access the web application's frontend, receiving a HTTP 200 OK response, which indicates the app is working. A final grep of the log file returns no output, confirming that the "Connection Refused" errors have ceased.
+
+
+
